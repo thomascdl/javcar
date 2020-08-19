@@ -9,10 +9,10 @@
       <div class="mask" />
       <div class="play" @click.stop="playVideo(video.url,video.id)" />
       <div class="length-div"><span>{{ video.length | toTime }}</span></div>
-      <div v-if="video.hasSubtitle === '1'" class="zimu">
+      <div v-if="video.hasSubtitle === '1'" class="subtitle">
         <el-image
           style="width:60px;height:60px"
-          :src="zimuUrl"
+          :src="subtitleUrl"
           fit="fill"
           :lazy="true"
         />
@@ -94,7 +94,6 @@ export default {
       return text
     }
   },
-  // props: ['video'],
   props: {
     video: {
       type: Object,
@@ -105,7 +104,7 @@ export default {
   },
   data() {
     return {
-      zimuUrl: require('assets/img/zimu.png'),
+      subtitleUrl: require('assets/img/subtitle.png'),
       visible: false,
       openDelay: 500,
       params: {},
@@ -264,7 +263,7 @@ export default {
     font-size: 12px;
     font-weight: bolder;
   }
-  .zimu{
+  .subtitle{
     position: absolute;
     left: 4px;
     top: 0;
@@ -287,9 +286,3 @@ export default {
     margin-top: 5px;
   }
 </style>
-
-<!--<style>-->
-<!--  /*.my-pop {*/-->
-<!--  /*  background-color: #f8f8f8;*/-->
-<!--  /*}*/-->
-<!--</style>-->

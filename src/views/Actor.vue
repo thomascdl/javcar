@@ -37,10 +37,21 @@ export default {
     }
   },
   watch: {
-    $route(to, from) {
+    $route(to) {
       if (to.path === '/actor/list') {
         this.loadPage(to.query)
       }
+    },
+    'actorList': function() {
+      this.$nextTick(function() {
+        const that = document.getElementsByClassName('container')[0]
+        setTimeout(() => {
+          that.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          })
+        }, 100)
+      })
     }
   },
   created() {

@@ -18,17 +18,6 @@ export default {
   },
   data() {
     return {}
-  },
-  watch: {
-    $route(to) {
-      const that = document.getElementsByClassName('container')[0]
-      setTimeout(() => {
-        that.scrollTo({
-          top: 0,
-          behavior: 'smooth'
-        })
-      }, 100)
-    }
   }
 }
 </script>

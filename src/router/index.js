@@ -5,7 +5,6 @@ const VideoList = () => import('views/VideoList')
 const Login = () => import('views/Login')
 const VideoDetail = () => import('views/VideoDetail')
 const Actor = () => import('views/Actor')
-const videoPlay = () => import('components/Video')
 const Layout = () => import('@/layout')
 
 Vue.use(VueRouter)
@@ -48,11 +47,6 @@ const routes = [
         component: Actor
       }
     ]
-  },
-  {
-    path: '/video1',
-    name: 'videoPlayer',
-    component: videoPlay
   }
 ]
 

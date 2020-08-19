@@ -1,7 +1,4 @@
 const mutations = {
-  // changeQuery(state, payload) {
-  //   state.query = payload
-  // },
   clearLoginStatus(state) {
     state.isLogin = false
     state.currentUser = 'guest'

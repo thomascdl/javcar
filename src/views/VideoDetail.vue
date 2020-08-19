@@ -75,6 +75,23 @@ export default {
       return this.$store.state.userId
     }
   },
+  watch: {
+    $route() {
+      this.getInfo()
+      this.getRelativeVideo()
+    },
+    'videoFive': function() {
+      this.$nextTick(function() {
+        const that = document.getElementsByClassName('container')[0]
+        setTimeout(() => {
+          that.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          })
+        }, 100)
+      })
+    }
+  },
   created() {
     this.getInfo()
     this.getRelativeVideo()

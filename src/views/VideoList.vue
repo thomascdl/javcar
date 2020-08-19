@@ -38,7 +38,7 @@
     <div id="video-content">
       <VideoItem v-for="(item,index) in videoList" :key="index" :video="item" />
       <p /><p /><p /><p />
-      <div class="pager">
+      <div v-if="showPage" class="pager">
         <el-pagination
           :current-page.sync="page"
           background
@@ -72,17 +72,31 @@ export default {
       videoList: [],
       videoCount: 0,
       showSelector: false,
-      page: 1
-      // params: {}
+      page: 1,
+      showPage: true
     }
   },
   watch: {
+    'videoList': function() {
+      this.$nextTick(function() {
+        const that = document.getElementsByClassName('container')[0]
+        setTimeout(() => {
+          that.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          })
+        }, 100)
+      })
+    },
     '$store.state.showSelector': function() {
       this.showSelector = this.$store.state.showSelector
     },
-    $route(to, from) {
+    $route(to) {
       if (to.path === '/video/list') {
+        this.orderBy = this.$route.query.orderBy || 'id'
         this.getInfo(to.query)
+        this.page = parseInt(this.$route.query.page) || 1
+        this.reloadPagination()
       }
     },
     '$store.state.token': function() {
@@ -91,12 +105,17 @@ export default {
     }
   },
   created() {
-    this.$store.commit('changeParams', this.$route.query)
+    const queryData = JSON.parse(JSON.stringify(this.$route.query))
+    this.$store.commit('changeParams', queryData)
     this.page = parseInt(this.$route.query.page) || 1
     this.orderBy = this.$route.query.orderBy || 'id'
     this.getInfo(this.$route.query)
   },
   methods: {
+    reloadPagination() {
+      this.showPage = false
+      this.$nextTick(() => (this.showPage = true))
+    },
     changeSelector() {
       this.showSelector = !this.showSelector
       this.$store.commit('changeSelector')
@@ -107,10 +126,7 @@ export default {
           this.videoList = res.data
           this.videoCount = res.count
           if (!res.userId) {
-            window.localStorage.setItem('token', '')
-            window.localStorage.setItem('user', 'guest')
-            window.localStorage.setItem('userId', null)
-            this.$store.commit('clearLoginStatus')
+            this.resetLoginStatus()
           }
         }).catch(() => {
           this.videoList = []
@@ -121,10 +137,7 @@ export default {
           this.videoList = res.data
           this.videoCount = res.count
           if (!res.userId) {
-            window.localStorage.setItem('token', '')
-            window.localStorage.setItem('user', 'guest')
-            window.localStorage.setItem('userId', null)
-            this.$store.commit('clearLoginStatus')
+            this.resetLoginStatus()
           }
         }).catch(() => {
           this.videoList = []
@@ -135,10 +148,7 @@ export default {
           this.videoList = res.data
           this.videoCount = res.count
           if (!res.userId) {
-            window.localStorage.setItem('token', '')
-            window.localStorage.setItem('user', 'guest')
-            window.localStorage.setItem('userId', null)
-            this.$store.commit('clearLoginStatus')
+            this.resetLoginStatus()
           }
         }).catch(() => {
           this.videoList = []
@@ -146,8 +156,15 @@ export default {
         })
       }
     },
+    resetLoginStatus() {
+      window.localStorage.setItem('token', '')
+      window.localStorage.setItem('user', 'guest')
+      window.localStorage.setItem('userId', null)
+      this.$store.commit('clearLoginStatus')
+    },
     changeOrder(label) {
       this.$store.commit('changePage', 1)
+      this.page = 1
       this.$store.commit('changeOrderBy', label)
       this.orderBy = label
       this.getVideos(this.$store.state.params)
@@ -159,6 +176,7 @@ export default {
       }
       this.$store.commit('changePosition', tmp)
       this.$store.commit('changePage', 1)
+      this.page = 1
       this.getVideos(this.$store.state.params)
     },
     currentPageChange(page) {

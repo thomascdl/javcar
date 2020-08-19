@@ -22,21 +22,19 @@
         <span>您的选择：</span>
       </div>
       <div class="row-val">
-        <ul>
-          <span v-for="(value,key,index) in myChoice" :key="index">
-            <el-tag
-              v-if="value.length !== 0"
-              closable
-              type="success"
-              effect="dark"
-              class="tag"
-              size="mini"
-              @close="rmFromChoice(key)"
-            >
-              {{ trans[key] }}：{{ value.join(', ') }}
-            </el-tag>
-          </span>
-        </ul>
+        <span v-for="(value,key,index) in myChoice" :key="index">
+          <el-tag
+            v-if="value.length !== 0"
+            closable
+            type="success"
+            effect="dark"
+            class="tag"
+            size="mini"
+            @close="rmFromChoice(key)"
+          >
+            {{ trans[key] }}：{{ value.join(', ') }}
+          </el-tag>
+        </span>
       </div>
       <div class="row-ext">
         <el-button type="danger" size="mini" class="clear-button" @click="deleteAll">清空</el-button>
@@ -61,7 +59,7 @@ export default {
     }
   },
   watch: {
-    $route(to, from) {
+    $route(to) {
       if (to.path === '/video/list') {
         this.refreshParams()
       }

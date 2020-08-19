@@ -3,7 +3,7 @@ import axios from 'axios'
 export function request(config) {
   // 1.创建axios的实例
   const instance = axios.create({
-    baseURL: 'http://192.168.0.6:8001',
+    baseURL: 'http://127.0.0.1:8001',
     timeout: 5000
   })
   // 2.axios的拦截器
@@ -21,7 +21,7 @@ export function request(config) {
   instance.interceptors.response.use(res => {
     return res.data
   }, err => {
-    if (err.response.data.code === '1001') {
+    if (err.response.data.code === this.GLOBAL.login_err_code) {
       window.localStorage.setItem('token', '')
       window.localStorage.setItem('user', 'guest')
       window.localStorage.setItem('userId', null)

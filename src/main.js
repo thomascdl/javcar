@@ -12,17 +12,6 @@ Vue.use(ViewUI)
 
 import '@/icons' // icon
 
-import VueVideoPlayer from 'vue-video-player'
-
-// require videojs style
-import 'video.js/dist/video-js.css'
-import 'vue-video-player/src/custom-theme.css'
-
-Vue.use(VueVideoPlayer /* {
-  options: global default options,
-  events: global videojs events
-} */)
-
 Vue.config.productionTip = false
 
 import global from '@/global/Global'

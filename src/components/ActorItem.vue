@@ -30,7 +30,6 @@ export default {
       return text
     }
   },
-  // props: ['actor'],
   props: {
     actor: {
       type: Object,
