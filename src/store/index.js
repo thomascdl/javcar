@@ -13,7 +13,8 @@ export default new Vuex.Store({
     isLogin: false,
     token: '',
     params: {},
-    showSelector: false
+    showSelector: false,
+    like: false
   },
   mutations,
   getters,

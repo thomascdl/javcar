@@ -9,7 +9,7 @@
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item>修改密码</el-dropdown-item>
         <el-dropdown-item>播放记录</el-dropdown-item>
-        <el-dropdown-item>我喜欢</el-dropdown-item>
+        <el-dropdown-item :class="{active:like === true}" @click.native="myLike">我喜欢</el-dropdown-item>
         <el-dropdown-item divided @click.native="logout">退出</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
@@ -20,7 +20,9 @@
 export default {
   name: 'Account',
   data() {
-    return {}
+    return {
+      like: false
+    }
   },
   computed: {
     isLogin() {
@@ -33,6 +35,12 @@ export default {
   methods: {
     login() {
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+    },
+    myLike() {
+      this.like = !this.like
+      this.$store.commit('changeLike', this.like)
+      this.$store.commit('initParams')
+      this.$router.push({ path: '/video/list', query: { like: this.like.toString() }})
     },
     logout() {
       window.localStorage.setItem('token', '')
@@ -72,5 +80,8 @@ export default {
     margin-left: 20px;
     margin-right: 20px;
     cursor: pointer;
+  }
+  .active{
+    color:#e4393c;
   }
 </style>

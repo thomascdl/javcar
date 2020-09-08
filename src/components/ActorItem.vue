@@ -7,7 +7,16 @@
         :src="actor.img"
         :lazy="true"
         fit="fill"
-      />
+      >
+        <div slot="error" class="image-slot">
+          <el-image
+            style="width:125px;height:125px"
+            :src="defaultURL"
+            :lazy="true"
+            fit="fill"
+          />
+        </div>
+      </el-image>>
       <div class="mask1" />
     </div>
     <div id="text-area">
@@ -39,7 +48,9 @@ export default {
     }
   },
   data() {
-    return {}
+    return {
+      defaultURL: this.GLOBAL.back_url + 'media/actor/nowprinting.gif'
+    }
   },
   methods: {
     searchOnActor(item) {

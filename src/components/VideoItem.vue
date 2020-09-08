@@ -117,6 +117,11 @@ export default {
       return this.$store.state.userId
     }
   },
+  watch: {
+    'video': function() {
+      this.like = this.video.scoreDetail['islike']
+    }
+  },
   methods: {
     change(score) {
       scoreTheVideo(this.$store.getters.userId, this.video.id, score * 2).then(res => {

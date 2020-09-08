@@ -22,9 +22,13 @@ const mutations = {
     state.params['genre'] = []
     state.params['orderBy'] = 'id'
     state.params['isReverse'] = false
+    state.params['like'] = state.like
   },
   changeParams(state, payload) {
     state.params = payload
+  },
+  changeLike(state, payload) {
+    state.like = payload
   },
   changeFh(state, payload) {
     state.params['fh'] = payload
