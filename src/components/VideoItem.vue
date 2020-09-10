@@ -120,6 +120,7 @@ export default {
   watch: {
     'video': function() {
       this.like = this.video.scoreDetail['islike']
+      this.mark = this.video.scoreDetail.mark / 2 || 0
     }
   },
   methods: {
